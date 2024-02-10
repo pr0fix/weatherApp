@@ -4,14 +4,21 @@ import { Box, Button, Card, Divider, Input, Typography } from "@mui/joy";
 import moment from "moment";
 import Forecast from "./forecast";
 
+
 export default function WeatherApp() {
 
+    // State to save weather data
     const [weatherData, setWeatherData] = useState(null);
+    // State to save forecast data
     const [forecastData, setForecastData] = useState(null);
+    // State to save user latitude-value
     const [lat, setLat] = useState(null);
+    // State to save user longitude-value
     const [lon, setLon] = useState(null);
+    // State to save city from user input
     const [inputCity, setInputCity] = useState("");
 
+    // Function to fetch weather data from users current location
     const fetchWeatherOnLocation = async () => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/weather/?lat=${lat}&lon=${lon}&APPID=${import.meta.env.VITE_API_KEY}&units=metric`);
@@ -21,6 +28,7 @@ export default function WeatherApp() {
         }
     }
 
+    // Function to fetch weather data from city specified by user input
     const fetchWeatherData = async (inputCity) => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/weather?q=${inputCity}&appid=${import.meta.env.VITE_API_KEY}&units=metric`);
@@ -30,26 +38,27 @@ export default function WeatherApp() {
         }
     }
 
+    // Function to fetch 7-day forecast data from users current location
     const fetchForecastOnLocation = async () => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/forecast?lat=${lat}&lon=${lon}&APPID=${import.meta.env.VITE_API_KEY}&units=metric`);
             setForecastData(res.data);
-            console.log(res.data)
         } catch (err) {
             console.error(err);
         }
     }
 
+    // Function to fetch 7-day forecast data from city specified by user input
     const fetchForecastData = async (inputCity) => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/forecast/q=${inputCity}&appid=${import.meta.env.VITE_API_KEY}&units=metric`);
             setForecastData(res.data);
-            console.log(res.data)
         } catch (err) {
             console.error(err);
         }
     }
 
+    // Function to get user location lat and lon values
     const getLocation = () => {
         navigator.geolocation.getCurrentPosition(function (position) {
             setLat(position.coords.latitude);
@@ -57,22 +66,34 @@ export default function WeatherApp() {
         });
     }
 
-    const handleButtonClick = () => {
+    // Function to handle search-button click
+    const handleSearchButtonClick = () => {
         fetchWeatherData(inputCity);
     }
 
+    // Function to set user input value into inputCity-state
     const handleInputChange = (e) => {
         setInputCity(e.target.value);
     }
 
+    // Function to handle location-button click
+    const handleLocationButtonClick = () => {
+        fetchWeatherOnLocation();
+    }
+
+    // useEffect to render page content based on location changes
     useEffect(() => {
+
+        // If latitude and longitude values are not yet available, get user's location
         if (lat === null && lon === null) {
             getLocation();
         } else {
+            // If no city input is provided, fetch weather and forecast based on user's location
             if (inputCity == "") {
                 fetchWeatherOnLocation(lat, lon);
                 fetchForecastOnLocation(lat, lon)
             } else {
+                // If city input is provided, fetch weather and forecast based on city
                 fetchWeatherData();
                 fetchForecastData();
             }
@@ -84,8 +105,9 @@ export default function WeatherApp() {
             <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: '95vh' }}>
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                        <Input value={inputCity} onChange={handleInputChange} sx={{ width: "363px", height: '45px' }} variant="outlined" size="lg" placeholder="Search for a city..." ></Input>
-                        <Button variant="outlined" color="neutral" sx={{ height: "45px", width: "70px", background: 'white' }} onClick={handleButtonClick}>Search</Button>
+                        <Input value={inputCity} onChange={handleInputChange} sx={{ width: "293px", height: '45px' }} variant="outlined" size="lg" placeholder="Search for a city..." ></Input>
+                        <Button variant="outlined" color="neutral" sx={{ height: "45px", width: "70px", background: 'white' }} onClick={handleSearchButtonClick}>Search</Button>
+                        <Button variant="outlined" color="neutral" sx={{ height: "45px", width: "70px", background: 'white' }} onClick={handleLocationButtonClick}>Location</Button>
                     </Box>
 
                     {weatherData ?
