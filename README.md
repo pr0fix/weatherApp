@@ -1,4 +1,4 @@
-## Weather App
+# Weather App
 
 This is a personal project made to learn more about React. This application provides current weather information and a 7-day forecast based on the user's location or a specified city.
 
