@@ -43,6 +43,7 @@ export default function WeatherApp() {
         try {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/forecast?lat=${lat}&lon=${lon}&APPID=${import.meta.env.VITE_API_KEY}&units=metric`);
             setForecastData(res.data);
+            console.log(res.data); // delete after use
         } catch (err) {
             console.error(err);
         }
@@ -51,7 +52,7 @@ export default function WeatherApp() {
     // Function to fetch 7-day forecast data from city specified by user input
     const fetchForecastData = async (inputCity) => {
         try {
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/forecast/q=${inputCity}&appid=${import.meta.env.VITE_API_KEY}&units=metric`);
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/forecast?q=${inputCity}&appid=${import.meta.env.VITE_API_KEY}&units=metric`);
             setForecastData(res.data);
         } catch (err) {
             console.error(err);
@@ -69,6 +70,7 @@ export default function WeatherApp() {
     // Function to handle search-button click
     const handleSearchButtonClick = () => {
         fetchWeatherData(inputCity);
+        fetchForecastData(inputCity);
     }
 
     // Function to set user input value into inputCity-state
@@ -79,7 +81,21 @@ export default function WeatherApp() {
     // Function to handle location-button click
     const handleLocationButtonClick = () => {
         fetchWeatherOnLocation();
+        fetchForecastOnLocation();
     }
+
+    // Function to clear input field when user clicks on it after unfocusing
+    const handleClearInputField = () => {
+        setInputCity("");
+    }
+
+    // Function to make search on pressing "Enter" on keyboard
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleSearchButtonClick();
+        };
+    }
+
 
     // useEffect to render page content based on location changes
     useEffect(() => {
@@ -105,7 +121,7 @@ export default function WeatherApp() {
             <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: '95vh' }}>
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                        <Input value={inputCity} onChange={handleInputChange} sx={{ width: "293px", height: '45px' }} variant="outlined" size="lg" placeholder="Search for a city..." ></Input>
+                        <Input onKeyDown={handleKeyDown} value={inputCity} onChange={handleInputChange} onFocus={handleClearInputField} sx={{ width: "293px", height: '45px' }} variant="outlined" size="lg" placeholder="Search for a city..." ></Input>
                         <Button variant="outlined" color="neutral" sx={{ height: "45px", width: "70px", background: 'white' }} onClick={handleSearchButtonClick}>Search</Button>
                         <Button variant="outlined" color="neutral" sx={{ height: "45px", width: "70px", background: 'white' }} onClick={handleLocationButtonClick}>Location</Button>
                     </Box>
@@ -132,7 +148,7 @@ export default function WeatherApp() {
 
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <Card sx={{ height: '630px' }}>{forecastData && <Forecast forecastData={forecastData} />}</Card>
+                    <Card sx={{ height: '630px', width: "400px" }}>{forecastData && <Forecast forecastData={forecastData} />}</Card>
 
                 </Box>
             </Box>
