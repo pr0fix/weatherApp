@@ -39,7 +39,6 @@ npm install
 # Set up environment variables
 Create a `.env` file in the root directory and add the following:
 
-```plaintext
 VITE_API_URL=https://api.openweathermap.org/data/2.5
 VITE_API_KEY={your_openweathermap_api_key}
 
