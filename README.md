@@ -28,7 +28,7 @@ To set up the project, follow these steps (NOTE: :
 
 ```bash
 # Clone the repository
-1. git clone https://github.com/pr0fix/weatherApp.git
+git clone https://github.com/pr0fix/weatherApp.git
 
 # Navigate to the project directory
 cd weatherApp
