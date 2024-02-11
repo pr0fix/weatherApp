@@ -17,7 +17,6 @@ const Forecast = ({ forecastData }) => {
 	const capitalize = (str) => {
 		for (let i = 0; i < str.length; i++) {
 			const newStr = str.charAt(0)[i].toUpperCase()
-			console.log(newStr)
 			return newStr.concat(str.substring(1))
 		}
 	}
@@ -25,13 +24,14 @@ const Forecast = ({ forecastData }) => {
 	return (
 		<>
 			<Typography color="neutral" level="h2" sx={{ display: "flex", justifyContent: "center" }}>7-day forecast</Typography>
-			<Divider inset="context" sx={{ my: 2, padding: "0", margin: '0', }}></Divider>
+			
 			{forecastData ? (
 				<Accordion allowZeroExpanded>
 					{forecastData.list.slice(0, 7).map((_, i) => (
 						<AccordionItem key={i}>
 							<AccordionItemHeading>
 								<AccordionItemButton>
+                                <Divider inset="context" sx={{ my: 2, marginBlock:0 }}></Divider>
 									<Box sx={{ display: "flex", alignItems: "center" }}>
 										{forecastData.list[i]?.weather[0]?.icon && (
 											<img
