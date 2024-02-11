@@ -17,6 +17,8 @@ export default function WeatherApp() {
 	const [lon, setLon] = useState(null);
 	// State to save city from user input
 	const [inputCity, setInputCity] = useState("");
+	// State to validate that user input is not empty
+	const [validationError, setValidationError] = useState(false);
 
 	// Function to fetch weather data from users current location
 	const fetchWeatherOnLocation = async () => {
@@ -69,8 +71,14 @@ export default function WeatherApp() {
 
 	// Function to handle search-button click
 	const handleSearchButtonClick = () => {
+		if (inputCity != '') {
 		fetchWeatherData(inputCity);
 		fetchForecastData(inputCity);
+		setValidationError(false);
+		}
+		else {
+			setValidationError(true);
+		}
 	}
 
 	// Function to set user input value into inputCity-state
@@ -82,6 +90,7 @@ export default function WeatherApp() {
 	const handleLocationButtonClick = () => {
 		fetchWeatherOnLocation();
 		fetchForecastOnLocation();
+		setValidationError(false);
 	}
 
 	// Function to clear input field when user clicks on it after unfocusing
@@ -125,7 +134,7 @@ export default function WeatherApp() {
 					{weatherData ?
 						<Card sx={{ height: '630px', width: '400px', maxWidth: '100%' }}>
 							<Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "40px" }}>
-								<Input onKeyDown={handleKeyDown} value={inputCity} onChange={handleInputChange} onFocus={handleClearInputField} sx={{ width: "293px", height: '45px' }} variant="outlined" size="lg" placeholder="Search for a city..." ></Input>
+								<Input onKeyDown={handleKeyDown} value={inputCity} onChange={handleInputChange} onFocus={handleClearInputField} error={validationError} sx={{ width: "293px", height: '45px' }} variant="outlined" size="lg" placeholder="Search for a city..." ></Input>
 								<Button variant="outlined" color="neutral" sx={{ height: "45px", width: "70px", background: 'white' }} onClick={handleSearchButtonClick}>Search</Button>
 								<Button variant="outlined" color="neutral" sx={{ height: "45px", width: "70px", background: 'white' }} onClick={handleLocationButtonClick}>Location</Button>
 							</Box>
