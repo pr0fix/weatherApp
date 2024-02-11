@@ -1,47 +1,74 @@
 # Weather App
 
-This application provides current weather information and a 7-day forecast based on the user's location or a specified city.
+The Weather App is a web application that provides users with current weather information and a 7-day forecast based on their location or a specified city.
 
 ## Features
-- Fetches weather data from the OpenWeatherMap API.
-- Allows users to search for weather information based on a city name.
-- Provides current weather conditions including temperature, description and wind speed.
-- Displays a 7-day forecast including weather icons, description and temperature ranges.
 
-## Technologies used
+- **Real-time Weather Data**: Fetches weather data from the OpenWeatherMap API, providing accurate and up-to-date information.
+- **City-based Search**: Allows users to search for weather information based on the name of a city.
+- **Detailed Weather Information**: Provides current weather conditions including temperature, description, and wind speed.
+- **7-Day Forecast**: Displays a 7-day forecast, complete with weather icons, descriptions, and temperature ranges.
+
+## Technologies Used
+
 - React
+- Emotion
 - Material-UI
 - axios
+- moment
 - react-accessible-accordion
 
 ## OpenWeatherMap API
-The application relies on an API provided by OpenWeatherMap.org, accessible at: 
-[Weather API](https://openweathermap.org/api)
+
+The Weather App relies on the [OpenWeatherMap API](https://openweathermap.org/api) to fetch weather data. You'll need to sign up for an API key to use the service.
 
 ## Setup Instructions
 
 ### Prerequisites
-- Node.js & npm installed
+
+Make sure you have the following installed:
+
+- Node.js & npm
 
 ### Installation
-To set up the project, follow these steps (NOTE: :
 
-```bash
-# Clone the repository
-git clone https://github.com/pr0fix/weatherApp.git
+Follow these steps to set up the project:
 
-# Navigate to the project directory
-cd weatherApp
+1. Clone the repository:
 
-# Install dependencies
-npm install
+    ```bash
+    git clone https://github.com/pr0fix/weatherApp.git
+    ```
 
-# Set up environment variables
-Create a `.env` file in the root directory and add the following:
+2. Navigate to the project directory:
 
-```plaintext
-VITE_API_URL=https://api.openweathermap.org/data/2.5
-VITE_API_KEY={your_openweathermap_api_key}
+    ```bash
+    cd weatherApp
+    ```
 
-# Start the development server
-npm run dev
+3. Install dependencies:
+
+    ```bash
+    npm install
+    ```
+
+4. Set up environment variables:
+   
+   Create a `.env` file in the root directory and add the following:
+
+    ```
+    VITE_API_URL=https://api.openweathermap.org/data/2.5
+    VITE_API_KEY={your_openweathermap_api_key}
+    ```
+
+    Replace `{your_openweathermap_api_key}` with your actual API key.
+
+5. Start the development server:
+
+    ```bash
+    npm run dev
+    ```
+
+## Feedback and Contributions
+
+Feedback and contributions are welcome! If you encounter any issues or have suggestions for improvement, feel free to [open an issue](https://github.com/pr0fix/weatherApp/issues) or submit a pull request.
